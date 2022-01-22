@@ -1,0 +1,64 @@
+﻿<Window x:Name="Главная_страничка" x:Class="MySimpleAccount.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MySimpleAccount"
+        mc:Ignorable="d"
+        Title="Мой аккаунт" Height="450" Width="751.629" Background="#FFF6DBA1" Icon="EwdJKitWYAEe_ju.jpg">
+
+    <Window.Resources>
+        <ContextMenu x:Key="listMenu">
+            <MenuItem Header="Добавить" Click="AddAccount"/>
+            <MenuItem Header="Удалить" Click="DeleteAccount"/>
+        </ContextMenu>
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Menu Grid.ColumnSpan="2" Background="#FF96E876" FontFamily="Showcard Gothic" FontSize="18">
+            <MenuItem Header="Подборки">
+                <MenuItem Header="Игрухи" Click="OpenGames"/>
+                <MenuItem Header="Музяка" Click="OpenMusics"/>
+            </MenuItem>
+        </Menu>
+
+        <ListBox Grid.Row="1" SelectedItem="{Binding SelectedAccount}"
+                 ItemsSource="{Binding Accounts}" 
+                 DisplayMemberPath="NickName" 
+                 ContextMenu="{StaticResource listMenu}" Background="#FFC6E559"
+                 />
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <StackPanel 
+                DataContext="{Binding SelectedAccount}"
+                Orientation="Vertical">
+                <Label Content="Имя"/>
+                <TextBox Text="{Binding FirstName}"/>
+                <Label Content="Фамилия"/>
+                <TextBox Text="{Binding LastName}"/>
+                <Label Content="Никнейм"/>
+                <TextBox Text="{Binding NickName}"/>
+                <Label Content="Дата Создания"/>
+                <DatePicker SelectedDate="{Binding Creation}"/>
+            </StackPanel>
+            <Label Content="Любимая игра"/>
+            <ComboBox ItemsSource="{Binding Games}" 
+                      SelectedItem="{Binding SelectedAccount.Game}"
+                      DisplayMemberPath="Name"/>
+
+            <Label Content="Любимая музыка"/>
+            <ComboBox ItemsSource="{Binding Musics}" 
+                      SelectedItem="{Binding SelectedAccount.Music}"
+                      DisplayMemberPath="Title"/>
+        </StackPanel>
+    </Grid>
+</Window>
